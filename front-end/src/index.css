@@ -1,0 +1,63 @@
+/* 1. Google Fonts sabse pehle */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Inter:wght@300;400;500;700&display=swap');
+
+/* 2. Tailwind v4 import (sirf yeh ek line) */
+@import "tailwindcss";
+
+/* 3. Custom Fonts define karo */
+@theme {
+  --font-playfair: "Playfair Display", serif;
+  --font-inter: "Inter", sans-serif;
+}
+
+/* Optional - body reset */
+body {
+  margin: 0;
+  padding: 0;
+}
+
+
+/* Custom Animations */
+@keyframes loading-bar {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+
+.animate-loading-bar {
+  animation: loading-bar 4s linear infinite;
+}
+
+@keyframes bounce-horizontal {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(10px); }
+}
+
+.animate-bounce-horizontal {
+  animation: bounce-horizontal 2s infinite ease-in-out;
+}
+
+/* --- THE FIX: Scrollbar Hide (Strict Mode) --- */
+.no-scrollbar::-webkit-scrollbar {
+  display: none !important;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none !important; /* IE and Edge */
+  scrollbar-width: none !important; /* Firefox */
+  overflow: -moz-scrollbars-none;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-in-out;
+}
