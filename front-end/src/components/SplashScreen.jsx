@@ -6,100 +6,86 @@ const SplashScreen = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigate('/home'); 
-    }, 5000);
+      navigate('/home');
+    }, 4500);
 
     return () => clearTimeout(timer);
   }, [navigate]);
 
   return (
-    <div className="h-screen w-full bg-black text-white font-inter antialiased overflow-hidden relative flex items-center justify-center">
+    <div className="h-screen w-full bg-black text-white font-inter antialiased overflow-hidden flex items-center justify-center relative">
 
-      {/* Background Image with architectural treatment */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-110 animate-slow-zoom"
-        style={{ 
-          // backgroundImage: `url('/images/splash-screen.jpg')`,
-          filter: 'brightness(0.3) grayscale(100%) contrast(1.2)' 
-        }}
-      />
+      {/* Subtle Background Grid */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:50px_50px]" />
 
-      {/* Luxury Red & Black Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(220,38,38,0.05)_0%,transparent_70%)]" />
+      {/* Main Content */}
+      <div className="relative z-10 flex flex-col items-center px-6 w-full max-w-[380px]">
 
-      {/* Content */}
-      <div className="relative z-10 flex flex-col items-center">
-        
-        {/* Logo Section */}
-        <div className="mb-12 relative group">
-          <div className="absolute inset-0 bg-red-600/20 blur-[50px] rounded-full animate-pulse"></div>
-          <img 
-            src="/images/logo.png" 
-            alt="Logo" 
-            className="relative z-10 mx-auto w-40 md:w-48 h-auto drop-shadow-[0_0_30px_rgba(0,0,0,0.5)] animate-float"
-          />
+        {/* Unique Architec Logo */}
+        <div className="mb-12 md:mb-16 relative">
+          <div className="absolute inset-0 bg-red-600/10 blur-[70px] rounded-full animate-pulse" />
+          
+          <svg 
+            width="160" 
+            height="160" 
+            viewBox="0 0 200 200" 
+            fill="none" 
+            xmlns="http://www.w3.org/2000/svg"
+            className="drop-shadow-[0_0_35px_rgba(220,38,38,0.45)] animate-float mx-auto"
+          >
+            <circle cx="100" cy="100" r="92" stroke="#991b1b" strokeWidth="4" strokeOpacity="0.3"/>
+            <circle cx="100" cy="100" r="78" stroke="#ef4444" strokeWidth="6" />
+            
+            <path d="M65 130 L65 75 L100 45 L135 75 L135 130" stroke="#ef4444" strokeWidth="12" strokeLinejoin="round" fill="none"/>
+            <path d="M78 130 L78 88 L100 70 L122 88 L122 130" stroke="#991b1b" strokeWidth="8" strokeLinejoin="round" fill="none"/>
+            
+            <circle cx="100" cy="105" r="18" fill="#ef4444"/>
+            <circle cx="100" cy="105" r="9" fill="#111111"/>
+          </svg>
         </div>
 
-        {/* Title Section */}
-        <div className="text-center space-y-4">
-          <div className="flex items-center justify-center gap-4 mb-2">
-             <div className="h-[1px] w-8 bg-red-600 animate-expand"></div>
-             <span className="text-red-600 text-xs tracking-[0.8em] uppercase font-bold">Innovation</span>
-             <div className="h-[1px] w-8 bg-red-600 animate-expand"></div>
-          </div>
-          
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-light tracking-[0.2em] text-white uppercase leading-none">
-            ARCHI<span className="font-bold text-red-600">TEC</span>
+        {/* ARCHITEC Text */}
+        <div className="text-center">
+          <h1 className="text-5xl sm:text-6xl md:text-7xl font-light tracking-[0.2em] text-white uppercase leading-none mb-4">
+            ARCHI<span className="font-bold text-red-600 tracking-wider">TEC</span>
           </h1>
           
-          <p className="text-zinc-500 text-[10px] md:text-xs tracking-[1em] uppercase mt-6 opacity-0 animate-fade-in-delayed">
-            Designing Future Spaces
+          <div className="h-[1px] w-28 sm:w-32 mx-auto bg-gradient-to-r from-transparent via-red-600 to-transparent mb-4" />
+          
+          <p className="text-red-600/70 text-[10px] sm:text-xs tracking-[3px] uppercase font-medium">
+            ARCHITECTURE REDEFINED
           </p>
         </div>
 
-        {/* Professional Progress Loader */}
-        <div className="absolute bottom-20 flex flex-col items-center gap-4">
-          <div className="w-64 h-[2px] bg-white/5 overflow-hidden rounded-full relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-red-600 to-transparent animate-progress-bar" />
-          </div>
-          <span className="text-[9px] text-zinc-600 uppercase tracking-[0.4em] animate-pulse">
-            Loading Experience
-          </span>
-        </div>
       </div>
 
-      {/* Custom Animations */}
+      {/* Bottom Loading Indicator */}
+      <div className="absolute bottom-8 sm:bottom-12 flex flex-col items-center w-full px-6">
+        <div className="w-44 sm:w-52 h-px bg-white/10 rounded-full overflow-hidden">
+          <div className="h-full w-1/3 bg-red-600 animate-loading-bar" />
+        </div>
+        <span className="text-[9px] sm:text-[10px] text-zinc-500 tracking-widest mt-4">
+          ESTABLISHING VISION
+        </span>
+      </div>
+
+      {/* Animations */}
       <style>{`
-        @keyframes slow-zoom {
-          0% { transform: scale(1.1); }
-          100% { transform: scale(1); }
-        }
-        .animate-slow-zoom { animation: slow-zoom 8s ease-out forwards; }
-
         @keyframes float {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-15px); }
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-16px); }
         }
-        .animate-float { animation: float 6s ease-in-out infinite; }
-
-        @keyframes expand {
-          0% { width: 0; opacity: 0; }
-          100% { width: 40px; opacity: 1; }
+        .animate-float {
+          animation: float 5s ease-in-out infinite;
         }
-        .animate-expand { animation: expand 1.5s ease-out forwards; }
 
-        @keyframes fade-in-delayed {
-          0% { opacity: 0; transform: translateY(10px); }
-          100% { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fade-in-delayed { animation: fade-in-delayed 2s ease-out 1s forwards; }
-
-        @keyframes progress-bar {
+        @keyframes loading-bar {
           0% { transform: translateX(-100%); }
-          100% { transform: translateX(100%); }
+          100% { transform: translateX(300%); }
         }
-        .animate-progress-bar { animation: progress-bar 3s cubic-bezier(0.65, 0, 0.35, 1) infinite; }
+        .animate-loading-bar {
+          animation: loading-bar 2.3s linear infinite;
+        }
       `}</style>
     </div>
   );

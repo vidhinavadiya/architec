@@ -10,19 +10,33 @@ const Home = () => {
   const [subcategories, setSubcategories] = useState([]);
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  const heroImages = [
-    "/images/home1.jpg",
-    "/images/View01.jpg",
-    "/images/VIEW_02.jpg",
-    "/images/VIEW_01.jpg",
+  // const heroImages = [
+  //   "/images/home1.jpg",
+  //   "/images/View01.jpg",
+  //   "/images/VIEW_02.jpg",
+  //   "/images/VIEW_01.jpg",
+  // ];
+  const heroVideos = [
+    "/videos/video_1.mp4",
+    "/videos/View01.mp4",
+    "/videos/video_1.mp4",
+    "/videos/VIEW_01.mp4",
   ];
+
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setCurrentSlide((prev) => (prev + 1) % heroImages.length);
+  //   }, 3000);
+  //   return () => clearInterval(interval);
+  // }, [heroImages.length]);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % heroImages.length);
-    }, 3000);
+      setCurrentSlide((prev) => (prev + 1) % heroVideos.length);
+    }, 5000); // Video ke liye thoda slow kiya hai (5 seconds)
+
     return () => clearInterval(interval);
-  }, [heroImages.length]);
+  }, [heroVideos.length]);
 
   useEffect(() => {
       const fetchData = async () => {
@@ -51,7 +65,7 @@ const Home = () => {
       <Navbar />
       
       <section className="relative h-screen w-full overflow-hidden bg-black">
-        {heroImages.map((img, index) => (
+        {/* {heroImages.map((img, index) => (
           <img
             key={index}
             src={img}
@@ -59,6 +73,20 @@ const Home = () => {
             className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[1500ms] ease-in-out ${
               index === currentSlide ? 'opacity-60 scale-105' : 'opacity-0 scale-100'
             } transition-transform duration-[5000ms]`}
+          />
+        ))} */}
+
+        {heroVideos.map((videoSrc, index) => (
+          <video
+            key={index}
+            src={videoSrc}
+            autoPlay
+            muted
+            loop
+            playsInline
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[1500ms] ease-in-out ${
+              index === currentSlide ? 'opacity-60 scale-105' : 'opacity-0 scale-100'
+            }`}
           />
         ))}
 
@@ -116,7 +144,7 @@ const Home = () => {
         </div>
         <div className="absolute bottom-12 left-8 md:left-20 flex items-center gap-6 z-30">
           <div className="flex gap-2">
-            {heroImages.map((_, index) => (
+            {heroVideos.map((_, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentSlide(index)}
@@ -126,7 +154,9 @@ const Home = () => {
               />
             ))}
           </div>
-          <span className="text-white/40 text-xs font-mono">0{currentSlide + 1} / 0{heroImages.length}</span>
+          <span className="text-white/40 text-xs font-mono">
+            0{currentSlide + 1} / 0{heroVideos.length}
+          </span>
         </div>
         <div className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/30 animate-bounce pointer-events-none">
           <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
