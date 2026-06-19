@@ -8,25 +8,6 @@ class AdminService {
         this.adminRepository = new AdminRepository();
     }
 
-//     // Register Admin (only first time)
-//  async register(data) {
-//     const { name, email, password } = data;
-
-//     // 🔥 Check if admin already exists
-//     const adminCount = await this.adminRepository.countAdmins();
-//     if (adminCount > 0) {
-//         throw new Error('Admin already exists. Cannot create another admin.');
-//     }
-
-//     const hashedPassword = await bcrypt.hash(password, 10);
-
-//     return await this.adminRepository.create({
-//         name,
-//         email,
-//         password: hashedPassword
-//     });
-// }
-
     // Login
     async login(data) {
         const { email, password } = data;
