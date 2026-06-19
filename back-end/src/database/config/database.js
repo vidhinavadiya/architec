@@ -1,27 +1,44 @@
-const { Sequelize } = require('sequelize');
-require('dotenv').config();
+const { Sequelize } = require("sequelize");
+require("dotenv").config();
 
-const sequelize = new Sequelize (
-    process.env.DB_NAME_DEVELOPMENT,
-    process.env.DB_USERNAME,
-    process.env.DB_PASSWORD,
-    {
-        host: process.env.DB_HOST,
-        dialect: 'mysql', //sequelize konsa database use kar raha hai uska name likhne ke liye
-        port: 3306,
-        logging: false //console me msg query print hogi
-    }
+const isProduction = process.env.NODE_ENV === "production";
+
+const sequelize = new Sequelize(
+  isProduction
+    ? process.env.DB_PROD_NAME
+    : process.env.DB_NAME_DEVELOPMENT,
+
+  isProduction
+    ? process.env.DB_PROD_USERNAME
+    : process.env.DB_LOCAL_USERNAME,
+
+  isProduction
+    ? process.env.DB_PROD_PASSWORD
+    : process.env.DB_LOCAL_PASSWORD,
+
+  {
+    host: isProduction
+      ? process.env.DB_PROD_HOST
+      : process.env.DB_LOCAL_HOST,
+
+    port: isProduction
+      ? process.env.DB_PROD_PORT
+      : 3306,
+
+    dialect: "mysql",
+    logging: false,
+  }
 );
 
-async function connectDB() {  //async function - database connection time use hota hai
-    try {
-        await sequelize.authenticate(); //sequelize ka built-in method, db name,pw, host sab check karne ke liye sahi hai ki nahi
-        console.log('database connected succesfully...!'); //debuging ke liye log ka use hota hai
-    } catch (error) {
-        console.error('unable to connect to the database..!', error);
-    }
+async function connectDB() {
+  try {
+    await sequelize.authenticate();
+    console.log("Database connected successfully!");
+  } catch (error) {
+    console.error("Unable to connect database!", error);
+  }
 }
 
-connectDB() //database connect karne ke liye, yee call nahi karega to function sif defined rahega , execute nahi hoga
+connectDB();
 
 module.exports = sequelize;
