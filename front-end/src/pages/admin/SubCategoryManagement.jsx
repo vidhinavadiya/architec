@@ -12,7 +12,8 @@ const SubCategoryManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
-
+  const API_URL = import.meta.env.VITE_API_URL;
+  const IMAGE_URL = import.meta.env.VITE_IMAGE_URL;
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -29,8 +30,8 @@ const SubCategoryManagement = () => {
   // ================= FETCH =================
   const fetchData = async () => {
     try {
-      const subRes = await axios.get("http://localhost:3000/api/admin/subcategory/all");
-      const catRes = await axios.get("http://localhost:3000/api/admin/category/all");
+      const subRes = await axios.get(`${API_URL}/api/admin/subcategory/all`);
+      const catRes = await axios.get(`${API_URL}/api/admin/category/all`);
 
       setSubcategories(subRes.data.data || []);
       setCategories(catRes.data.categories || []);
@@ -74,7 +75,7 @@ const SubCategoryManagement = () => {
       description: item.description || "",
       categoryId: item.categoryId
     });
-    setPreview(item.image ? `http://localhost:3000/uploads/subcategories/${item.image}` : null);
+    setPreview(item.image ? `${IMAGE_URL}/uploads/subcategories/${item.image}` : null);
     setIsModalOpen(true);
   };
 
@@ -98,8 +99,8 @@ const SubCategoryManagement = () => {
 
     try {
       const url = editingId 
-        ? `http://localhost:3000/api/admin/subcategory/update/${editingId}`
-        : "http://localhost:3000/api/admin/subcategory/create";
+        ? `${API_URL}/api/admin/subcategory/update/${editingId}`
+        : `${API_URL}/api/admin/subcategory/create`;
       
       const method = editingId ? "put" : "post";
 
@@ -118,7 +119,7 @@ const SubCategoryManagement = () => {
 
   const confirmDelete = async () => {
     try {
-      await axios.delete(`http://localhost:3000/api/admin/subcategory/delete/${deleteId}`, {
+      await axios.delete(`${API_URL}/api/admin/subcategory/delete/${deleteId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setSuccessMessage("Deleted successfully");
@@ -186,7 +187,7 @@ const SubCategoryManagement = () => {
                 {/* Image */}
                 <div className="w-20 h-20 rounded-xl overflow-hidden bg-zinc-800 border border-white/10 shrink-0">
                   <img 
-                    src={item.image ? `http://localhost:3000/uploads/subcategories/${item.image}` : "/images/placeholder.jpg"} 
+                    src={item.image ? `${IMAGE_URL}/uploads/subcategories/${item.image}` : "/images/placeholder.jpg"} 
                     className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
                     alt={item.title}
                   />
