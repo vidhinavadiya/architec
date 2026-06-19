@@ -29,6 +29,7 @@ const AdminLogin = () => {
         setError(res.data.message || "Invalid credentials");
       }
     } catch (err) {
+      console.log("LOGIN ERROR:", err.response);
       setError(err.response?.data?.message || "Access Denied: Server error");
     } finally {
       setLoading(false);
