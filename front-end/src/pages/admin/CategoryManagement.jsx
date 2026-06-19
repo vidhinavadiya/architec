@@ -96,6 +96,8 @@ const CategoryManagement = () => {
       fetchCategories();
       setTimeout(() => setSuccessMessage(""), 3000);
     } catch (err) {
+        console.log("ERROR RESPONSE:", err.response?.data);
+  console.log("ERROR STATUS:", err.response?.status);
       alert("Operation failed");
     }
   };
