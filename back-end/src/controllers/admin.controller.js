@@ -1,16 +1,24 @@
 const AdminService = require('../services/admin.service');
+const { successResponse, serverError } = require('../helpers/response');
 
 class Admincontroller {
     constructor() {
         this.adminService = new AdminService();
     }
 
-    login = async (req, res) => {
+    login = async (req) => {
         try {
-            const data = await this.adminService.login(req.body);
-            res.json({ message: "Login successful", data });
+            const result = await this.adminService.login(req.body);
+            return successResponse({
+                success: true,
+                message: 'Login Successfully',
+                data: result
+            });
         } catch (error) {
-            res.status(400).json({ error: error.message });
+            return serverError({
+                success: false,
+                message: error.message
+            });
         }
     };
 }

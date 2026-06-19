@@ -17,12 +17,13 @@ const CategoryManagement = () => {
   const [imageFile, setImageFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const [successMessage, setSuccessMessage] = useState("");
-
+  const API_URL = import.meta.env.VITE_API_URL;
+  const IMAGE_URL = import.meta.env.VITE_IMAGE_URL;
   const token = localStorage.getItem("adminToken");
 
   const fetchCategories = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/api/admin/category/all");
+      const res = await axios.get(`${API_URL}/api/admin/category/all`);
       setCategories(res.data.categories || []);
     } catch (err) {
       console.error(err);
@@ -52,7 +53,7 @@ const CategoryManagement = () => {
   const handleEdit = (category) => {
     setEditingId(category.id);
     setFormData({ title: category.title, description: category.description || "" });
-    setPreview(category.image ? `http://localhost:3000/uploads/categories/${category.image}` : null);
+    setPreview(category.image ? `${IMAGE_URL}/uploads/categories/${category.image}` : null);
     setImageFile(null);
     setIsModalOpen(true);
   };
@@ -81,8 +82,8 @@ const CategoryManagement = () => {
 
     try {
       const url = editingId 
-        ? `http://localhost:3000/api/admin/category/update/${editingId}`
-        : "http://localhost:3000/api/admin/category/create";
+        ? `${API_URL}/api/admin/category/update/${editingId}`
+        : `${API_URL}/api/admin/category/create`;
       
       const method = editingId ? "put" : "post";
 
@@ -101,7 +102,7 @@ const CategoryManagement = () => {
 
   const confirmDelete = async () => {
     try {
-      await axios.delete(`http://localhost:3000/api/admin/category/delete/${categoryToDelete}`, {
+      await axios.delete(`${API_URL}/api/admin/category/delete/${categoryToDelete}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setSuccessMessage("Deleted Successfully");
@@ -167,7 +168,7 @@ const CategoryManagement = () => {
                 {/* Image */}
                 <div className="w-24 h-24 rounded-xl overflow-hidden bg-zinc-800 border border-white/10 shrink-0">
                   <img 
-                    src={cat.image ? `http://localhost:3000/uploads/categories/${cat.image}` : "/images/placeholder.jpg"} 
+                    src={cat.image ? `${IMAGE_URL}/uploads/categories/${cat.image}` : "/images/placeholder.jpg"} 
                     className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
                     alt={cat.title}
                   />
