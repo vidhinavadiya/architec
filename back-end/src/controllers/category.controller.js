@@ -6,7 +6,7 @@ createCategory = async (req, res) => {
   try {
     const { title, description } = req.body;
 
-    const image = req.file ? req.file.filename : null;
+    const image = req.file ? req.file.path : null;
 
     const category = await categoryService.createCategory({
       title,
@@ -53,7 +53,7 @@ updateCategory = async (req, res) => {
     };
 
     if (req.file) {
-      data.image = req.file.filename;
+      data.image = req.file.path;
     }
 
     await categoryService.updateCategory(req.params.id, data);

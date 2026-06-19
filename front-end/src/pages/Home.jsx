@@ -195,8 +195,8 @@ const Home = () => {
                   onClick={() => handleCategoryClick(cat.id)}
                   className={`relative group overflow-hidden rounded-sm cursor-pointer border border-white/5 ${spanClass}`}
                 >
-                  <img
-                    src={`${IMAGE_URL}/uploads/categories/${cat.image}`}
+                 <img
+                    src={cat.image}
                     alt={cat.title}
                     className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-110"
                   />
@@ -243,7 +243,7 @@ const Home = () => {
                 >
                   <div className="h-full w-full">
                     <img
-                      src={`${IMAGE_URL}/uploads/subcategories/${sub.image}`}
+                      src={sub.image || "/images/placeholder.jpg"}
                       alt={sub.title}
                       className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-700 scale-100 group-hover:scale-110"
                     />

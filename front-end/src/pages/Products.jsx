@@ -209,13 +209,23 @@ const filteredPlans = plans.filter(plan =>
           onClick={() => openProject(plan)}
         >
           <div className="relative w-full md:w-[60%] overflow-hidden rounded-sm bg-zinc-900 aspect-[16/10]">
-            {plan.sections?.find(s => s.type === "image") && (
-              <img
-                src={`${IMAGE_URL}/uploads/plans/${plan.sections.find(s => s.type === "image").content}`}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-[2000ms] ease-out opacity-90 group-hover:opacity-100"
-                alt={plan.title}
-              />
-            )}
+            {(() => {
+  const imageSection = plan.sections?.find(
+    s => s.type === "image"
+  );
+
+  return imageSection ? (
+    <img
+      src={
+        imageSection?.content
+          ? imageSection.content
+          : "/images/placeholder.jpg"
+      }
+      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-[2000ms] ease-out opacity-90 group-hover:opacity-100"
+      alt={plan.title}
+    />
+  ) : null;
+})()}
             <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500"></div>
           </div>
 
@@ -244,9 +254,9 @@ const filteredPlans = plans.filter(plan =>
 
             {plan.icon && (
               <img 
-                src={`${API_URL}/uploads/icons/${plan.icon}`} 
-                className="w-10 h-10 grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-100 transition duration-700" 
-                alt="icon" 
+                src={plan.icon || "/images/placeholder.jpg"}
+                className="w-10 h-10 grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-100 transition duration-700"
+                alt="icon"
               />
             )}
             
@@ -290,13 +300,23 @@ const filteredPlans = plans.filter(plan =>
       id="horizontal-scroll-container"
       className="flex flex-nowrap h-screen overflow-x-auto overflow-y-hidden no-scrollbar snap-x snap-mandatory scroll-smooth">
       <div className="flex-none w-screen h-screen snap-center relative">
-        {selectedPlan.sections?.find(s => s.type === "image") && (
-          <img
-            src={`${IMAGE_URL}/uploads/plans/${selectedPlan.sections.find(s => s.type === "image").content}`}
-            className="w-full h-full object-cover"
-            alt="hero"
-          />
-        )}
+        {(() => {
+  const heroImage = selectedPlan.sections?.find(
+    s => s.type === "image"
+  );
+
+  return heroImage ? (
+    <img
+      src={
+        heroImage?.content
+          ? heroImage.content
+          : "/images/placeholder.jpg"
+      }
+      className="w-full h-full object-cover"
+      alt="hero"
+    />
+  ) : null;
+})()}
         
         <div className="absolute bottom-20 left-12 z-20">
           <h1 className="text-6xl md:text-8xl font-bold text-white uppercase tracking-tighter drop-shadow-2xl">
@@ -349,7 +369,7 @@ const filteredPlans = plans.filter(plan =>
           {sec.type === "image" ? (
             <div className="flex-none w-[90vw] h-screen snap-center p-10 bg-black">
               <img 
-                src={`${IMAGE_URL}/uploads/plans/${sec.content}`} 
+                src={sec.content || "/images/placeholder.jpg"}
                 className="w-full h-full object-cover rounded-lg shadow-[0_0_50px_rgba(0,0,0,0.5)] border border-white/5" 
                 alt="detail" 
               />

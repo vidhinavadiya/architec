@@ -10,7 +10,7 @@ class PlanController {
 
     // icon
 if (req.files && req.files.icon && req.files.icon.length > 0) {
-  body.icon = req.files.icon[0].filename;
+  body.icon = req.files.icon[0].path;
 }
 
     // sections array banayenge
@@ -21,7 +21,7 @@ if (req.files && req.files.section_images) {
         req.files.section_images.forEach(file => {
         body.sections.push({
           type: 'image',
-          content: file.filename
+          content: file.path
         });
       });
     }
@@ -63,7 +63,7 @@ if (req.files && req.files.section_images) {
 
     // icon update
     if (req.files.icon) {
-      body.icon = req.files.icon[0].filename;
+      body.icon = req.files.icon[0].path;
     }
 
     body.sections = [];
@@ -73,7 +73,7 @@ if (req.files && req.files.section_images) {
       req.files.section_images.forEach(file => {
         body.sections.push({
           type: 'image',
-          content: file.filename
+          content: file.path
         });
       });
     }

@@ -75,7 +75,7 @@ const SubCategoryManagement = () => {
       description: item.description || "",
       categoryId: item.categoryId
     });
-    setPreview(item.image ? `${IMAGE_URL}/uploads/subcategories/${item.image}` : null);
+setPreview(item.image ? item.image : null);
     setIsModalOpen(true);
   };
 
@@ -187,10 +187,10 @@ const SubCategoryManagement = () => {
                 {/* Image */}
                 <div className="w-20 h-20 rounded-xl overflow-hidden bg-zinc-800 border border-white/10 shrink-0">
                   <img 
-                    src={item.image ? `${IMAGE_URL}/uploads/subcategories/${item.image}` : "/images/placeholder.jpg"} 
-                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
-                    alt={item.title}
-                  />
+                      src={item.image ? item.image : "/images/placeholder.jpg"} 
+                      className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+                      alt={item.title}
+                    />
                 </div>
 
                 {/* Content */}

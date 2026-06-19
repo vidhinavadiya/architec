@@ -4,12 +4,16 @@ const CategoryController = require('../controllers/category.controller');
 const categoryController = new CategoryController();
 
 const authMiddleware = require('../middlewares/auth.middleware');
-const upload = require('../middlewares/upload/category_image.middleware');
+const upload = require('../middlewares/upload.middleware');
 
 // CREATE (Admin only + image upload)
 router.post(
   '/create',
   authMiddleware,
+  (req,res,next)=>{
+      req.uploadFolder = 'categories';
+      next();
+  },
   upload.single('image'),
   categoryController.createCategory
 );
@@ -18,6 +22,10 @@ router.post(
 router.put(
   '/update/:id',
   authMiddleware,
+  (req,res,next)=>{
+      req.uploadFolder = 'categories';
+      next();
+  },
   upload.single('image'),
   categoryController.updateCategory
 );

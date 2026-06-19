@@ -7,7 +7,7 @@ class SubCategoryController {
     try {
       const { title, description, categoryId } = req.body;
 
-      const image = req.file ? req.file.filename : null;
+      const image = req.file ? req.file.path : null;
 
       const data = await subCategoryService.createSubCategory({
         title,
@@ -44,7 +44,7 @@ class SubCategoryController {
     };
 
     if (req.file) {
-      data.image = req.file.filename;
+      data.image = req.file.path;
     }
 
     await subCategoryService.updateSubCategory(req.params.id, data);

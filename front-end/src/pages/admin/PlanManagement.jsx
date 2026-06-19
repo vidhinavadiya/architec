@@ -92,7 +92,7 @@ const PlanManagement = () => {
       status: plan.status
     });
     setSections(plan.sections.map(sec => ({ type: sec.type, content: sec.content, file: null })));
-    setIconPreview(plan.icon ? `${IMAGE_URL}/uploads/icons/${plan.icon}` : null);
+setIconPreview(plan.icon ? plan.icon : null);
     setIsModalOpen(true);
   };
 
@@ -214,7 +214,7 @@ const PlanManagement = () => {
                 
                 <div className="w-24 h-16 rounded-lg overflow-hidden bg-zinc-800 border border-white/10 shrink-0">
                   <img 
-                    src={plan.icon ? `${IMAGE_URL}/uploads/icons/${plan.icon}` : "/images/placeholder.jpg"} 
+                    src={plan.icon || "/images/placeholder.jpg"}
                     className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
                     alt={plan.title}
                   />
@@ -351,8 +351,11 @@ const PlanManagement = () => {
                             <div className="space-y-4">
                               <input type="file" onChange={(e)=>updateSection(index, e.target.files[0], true)} className="text-[10px] text-zinc-500" />
                               {(sec.preview || sec.content) && (
-                                <img src={sec.preview || `${IMAGE_URL}/uploads/sections/${sec.content}`} className="h-32 w-full object-cover rounded-xl border border-white/5" alt="Section" />
-                              )}
+<img 
+  src={sec.preview || sec.content || "/images/placeholder.jpg"}
+  className="h-32 w-full object-cover rounded-xl border border-white/5" 
+  alt="Section"
+/>                              )}
                             </div>
                           )}
                         </div>

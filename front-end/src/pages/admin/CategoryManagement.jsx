@@ -53,7 +53,7 @@ const CategoryManagement = () => {
   const handleEdit = (category) => {
     setEditingId(category.id);
     setFormData({ title: category.title, description: category.description || "" });
-    setPreview(category.image ? `${IMAGE_URL}/uploads/categories/${category.image}` : null);
+    setPreview(category.image ? category.image : null);
     setImageFile(null);
     setIsModalOpen(true);
   };
@@ -168,7 +168,11 @@ const CategoryManagement = () => {
                 {/* Image */}
                 <div className="w-24 h-24 rounded-xl overflow-hidden bg-zinc-800 border border-white/10 shrink-0">
                   <img 
-                    src={cat.image ? `${IMAGE_URL}/uploads/categories/${cat.image}` : "/images/placeholder.jpg"} 
+                    src={
+                        cat.image 
+                        ? cat.image 
+                        : "/images/placeholder.jpg"
+                      } 
                     className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
                     alt={cat.title}
                   />
