@@ -11,6 +11,7 @@ const Contact = () => {
     subject: '',
     message: ''
   });
+  const API_URL = import.meta.env.VITE_API_URL;
   const [currentSlide, setCurrentSlide] = useState(0);
   const contactImages = [
     "/images/View01.jpg", 
@@ -32,7 +33,7 @@ const Contact = () => {
     e.preventDefault();
 
     try {
-      await axios.post("http://localhost:3000/api/user/contact/send", formData);
+      await axios.post(`${API_URL}/api/user/contact/send`, formData);
       setShowPopup(true);
       setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (err) {

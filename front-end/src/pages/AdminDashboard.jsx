@@ -150,7 +150,7 @@ const AdminDashboard = () => {
     plans: 0,
     contacts: 0
   });
-
+  const API_URL = import.meta.env.VITE_API_URL;
   const token = localStorage.getItem("adminToken");
 
   useEffect(() => {
@@ -165,10 +165,10 @@ const AdminDashboard = () => {
   const fetchDashboardStats = async () => {
     try {
       const [catRes, subRes, planRes, contactRes] = await Promise.all([
-        axios.get("http://localhost:3000/api/admin/category/all"),
-        axios.get("http://localhost:3000/api/admin/subcategory/all"),
-        axios.get("http://localhost:3000/api/admin/plan/all"),
-        axios.get("http://localhost:3000/api/user/contact/all", {
+        axios.get(`${API_URL}/api/admin/category/all`),
+        axios.get(`${API_URL}/api/admin/subcategory/all`),
+        axios.get(`${API_URL}/api/admin/plan/all`),
+        axios.get(`${API_URL}/api/user/contact/all`, {
             headers: { Authorization: `Bearer ${token}` }
         })
       ]);

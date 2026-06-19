@@ -13,13 +13,13 @@ const ContactManagement = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const [selectedMessage, setSelectedMessage] = useState(null);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
-
+  const API_URL = import.meta.env.VITE_API_URL;
   const token = localStorage.getItem("adminToken");
 
   // ================= FETCH =================
   const fetchContacts = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/api/user/contact/all", {
+      const res = await axios.get(`${API_URL}/api/user/contact/all`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setContacts(res.data || []);
@@ -44,7 +44,7 @@ const ContactManagement = () => {
   // ================= ACTIONS =================
   const confirmDelete = async () => {
     try {
-      await axios.delete(`http://localhost:3000/api/user/contact/delete/${contactToDelete}`, {
+      await axios.delete(`${API_URL}/api/user/contact/delete/${contactToDelete}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setSuccessMessage("Inquiry Purged Successfully");

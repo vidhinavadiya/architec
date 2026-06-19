@@ -14,6 +14,8 @@ const Products = () => {
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
+  const API_URL = import.meta.env.VITE_API_URL;
+  const IMAGE_URL = import.meta.env.VITE_IMAGE_URL;
 
   const heroImages = [
     "/images/home1.jpg",
@@ -30,14 +32,14 @@ const Products = () => {
   }, [heroImages.length]);
 
   useEffect(() => {
-    axios.get("http://localhost:3000/api/admin/category/all")
+    axios.get(`${API_URL}/api/admin/category/all`)
       .then(res => setCategories(res.data.categories || []))
       .catch(err => console.error(err));
   }, []);
 
   const fetchSubCategories = async (categoryId) => {
     try {
-      const res = await axios.get(`http://localhost:3000/api/admin/subcategory/category/${categoryId}`);
+      const res = await axios.get(`${API_URL}/api/admin/subcategory/category/${categoryId}`);
       setSubcategories(res.data.data || []);
       setActiveCategory(categoryId);
     } catch (err) {
@@ -47,7 +49,7 @@ const Products = () => {
 
   const fetchPlansBySubcategory = async (subId) => {
     try {
-      const res = await axios.get(`http://localhost:3000/api/admin/plan/subcategory/${subId}`);
+      const res = await axios.get(`${API_URL}/api/admin/plan/subcategory/${subId}`);
       setPlans(res.data || []);
     } catch (err) {
       console.error(err);
@@ -55,7 +57,7 @@ const Products = () => {
   };
 
   useEffect(() => {
-    axios.get("http://localhost:3000/api/admin/plan/all")
+    axios.get(`${API_URL}/api/admin/plan/all`)
       .then(res => setPlans(res.data || []))
       .catch(err => console.error(err));
   }, []);
@@ -93,7 +95,7 @@ const Products = () => {
           fetchPlansBySubcategory(location.state.subCategoryId);
         }
       } else {
-        axios.get("http://localhost:3000/api/admin/plan/all")
+        axios.get(`${API_URL}/api/admin/plan/all`)
           .then(res => setPlans(res.data || []))
           .catch(err => console.error(err));
       }
@@ -209,7 +211,7 @@ const filteredPlans = plans.filter(plan =>
           <div className="relative w-full md:w-[60%] overflow-hidden rounded-sm bg-zinc-900 aspect-[16/10]">
             {plan.sections?.find(s => s.type === "image") && (
               <img
-                src={`http://localhost:3000/uploads/plans/${plan.sections.find(s => s.type === "image").content}`}
+                src={`${IMAGE_URL}/uploads/plans/${plan.sections.find(s => s.type === "image").content}`}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-[2000ms] ease-out opacity-90 group-hover:opacity-100"
                 alt={plan.title}
               />
@@ -242,7 +244,7 @@ const filteredPlans = plans.filter(plan =>
 
             {plan.icon && (
               <img 
-                src={`http://localhost:3000/uploads/icons/${plan.icon}`} 
+                src={`${API_URL}/uploads/icons/${plan.icon}`} 
                 className="w-10 h-10 grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-100 transition duration-700" 
                 alt="icon" 
               />
@@ -290,7 +292,7 @@ const filteredPlans = plans.filter(plan =>
       <div className="flex-none w-screen h-screen snap-center relative">
         {selectedPlan.sections?.find(s => s.type === "image") && (
           <img
-            src={`http://localhost:3000/uploads/plans/${selectedPlan.sections.find(s => s.type === "image").content}`}
+            src={`${IMAGE_URL}/uploads/plans/${selectedPlan.sections.find(s => s.type === "image").content}`}
             className="w-full h-full object-cover"
             alt="hero"
           />
@@ -347,7 +349,7 @@ const filteredPlans = plans.filter(plan =>
           {sec.type === "image" ? (
             <div className="flex-none w-[90vw] h-screen snap-center p-10 bg-black">
               <img 
-                src={`http://localhost:3000/uploads/plans/${sec.content}`} 
+                src={`${IMAGE_URL}/uploads/plans/${sec.content}`} 
                 className="w-full h-full object-cover rounded-lg shadow-[0_0_50px_rgba(0,0,0,0.5)] border border-white/5" 
                 alt="detail" 
               />

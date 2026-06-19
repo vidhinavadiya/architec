@@ -9,6 +9,8 @@ const PlanManagement = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
 
+  const API_URL = import.meta.env.VITE_API_URL;
+  const IMAGE_URL = import.meta.env.VITE_IMAGE_URL;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
@@ -36,8 +38,8 @@ const PlanManagement = () => {
   // ================= FETCH DATA =================
   const fetchData = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/api/admin/plan/all");
-      const subRes = await axios.get("http://localhost:3000/api/admin/subcategory/all");
+      const res = await axios.get(`${API_URL}/api/admin/plan/all`);
+      const subRes = await axios.get(`${API_URL}/api/admin/subcategory/all`);
       setPlans(res.data || []);
       setSubcategories(subRes.data.data || []);
     } catch (err) {
@@ -90,7 +92,7 @@ const PlanManagement = () => {
       status: plan.status
     });
     setSections(plan.sections.map(sec => ({ type: sec.type, content: sec.content, file: null })));
-    setIconPreview(plan.icon ? `http://localhost:3000/uploads/icons/${plan.icon}` : null);
+    setIconPreview(plan.icon ? `${IMAGE_URL}/uploads/icons/${plan.icon}` : null);
     setIsModalOpen(true);
   };
 
@@ -132,8 +134,8 @@ const PlanManagement = () => {
 
     try {
       const url = editingId 
-        ? `http://localhost:3000/api/admin/plan/update/${editingId}`
-        : "http://localhost:3000/api/admin/plan/create";
+        ? `${API_URL}/api/admin/plan/update/${editingId}`
+        : `${API_URL}/api/admin/plan/create`;
       
       const method = editingId ? "put" : "post";
       await axios[method](url, form, { headers: { Authorization: `Bearer ${token}` } });
@@ -149,7 +151,7 @@ const PlanManagement = () => {
 
   const confirmDelete = async () => {
     try {
-      await axios.delete(`http://localhost:3000/api/admin/plan/delete/${deleteId}`, {
+      await axios.delete(`${API_URL}/api/admin/plan/delete/${deleteId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setSuccessMessage("Plan Deconstructed");
@@ -212,7 +214,7 @@ const PlanManagement = () => {
                 
                 <div className="w-24 h-16 rounded-lg overflow-hidden bg-zinc-800 border border-white/10 shrink-0">
                   <img 
-                    src={plan.icon ? `http://localhost:3000/uploads/icons/${plan.icon}` : "/images/placeholder.jpg"} 
+                    src={plan.icon ? `${IMAGE_URL}/uploads/icons/${plan.icon}` : "/images/placeholder.jpg"} 
                     className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
                     alt={plan.title}
                   />
@@ -349,7 +351,7 @@ const PlanManagement = () => {
                             <div className="space-y-4">
                               <input type="file" onChange={(e)=>updateSection(index, e.target.files[0], true)} className="text-[10px] text-zinc-500" />
                               {(sec.preview || sec.content) && (
-                                <img src={sec.preview || `http://localhost:3000/uploads/sections/${sec.content}`} className="h-32 w-full object-cover rounded-xl border border-white/5" alt="Section" />
+                                <img src={sec.preview || `${IMAGE_URL}/uploads/sections/${sec.content}`} className="h-32 w-full object-cover rounded-xl border border-white/5" alt="Section" />
                               )}
                             </div>
                           )}

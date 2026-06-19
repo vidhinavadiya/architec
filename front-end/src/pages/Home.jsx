@@ -9,6 +9,8 @@ const Home = () => {
   const [categories, setCategories] = useState([]);
   const [subcategories, setSubcategories] = useState([]);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const API_URL = import.meta.env.VITE_API_URL;
+  const IMAGE_URL = import.meta.env.VITE_IMAGE_URL;
 
   const heroImages = [
     "/images/home1.jpg",
@@ -41,9 +43,9 @@ const Home = () => {
   useEffect(() => {
       const fetchData = async () => {
         try {
-          const catRes = await axios.get("http://localhost:3000/api/admin/category/all");
+          const catRes = await axios.get(`${API_URL}/api/admin/category/all`);
           setCategories(catRes.data.categories || []);
-          const subRes = await axios.get("http://localhost:3000/api/admin/subcategory/all");
+          const subRes = await axios.get(`${API_URL}/api/admin/subcategory/all`);
           setSubcategories(subRes.data.data || []);
         } catch (err) {
           console.error("Error fetching data:", err);
@@ -194,7 +196,7 @@ const Home = () => {
                   className={`relative group overflow-hidden rounded-sm cursor-pointer border border-white/5 ${spanClass}`}
                 >
                   <img
-                    src={`http://localhost:3000/uploads/categories/${cat.image}`}
+                    src={`${IMAGE_URL}/uploads/categories/${cat.image}`}
                     alt={cat.title}
                     className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-110"
                   />
@@ -241,7 +243,7 @@ const Home = () => {
                 >
                   <div className="h-full w-full">
                     <img
-                      src={`http://localhost:3000/uploads/subcategories/${sub.image}`}
+                      src={`${IMAGE_URL}/uploads/subcategories/${sub.image}`}
                       alt={sub.title}
                       className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-700 scale-100 group-hover:scale-110"
                     />
